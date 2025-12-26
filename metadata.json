@@ -1,0 +1,5 @@
+{
+  "name": "HJ Image Studio",
+  "description": "A professional-grade AI image generation platform powered by Gemini, allowing users to create stunning visuals from text prompts with advanced control over negative prompts and aspect ratios.",
+  "requestFramePermissions": []
+}
