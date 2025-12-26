@@ -18,7 +18,8 @@ const App: React.FC = () => {
     setError(null);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+      // Create a new instance right before the call as per guidelines
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       
       // We combine prompt and negative prompt instructions for the best result
       const fullPrompt = params.negativePrompt 
@@ -38,10 +39,13 @@ const App: React.FC = () => {
       });
 
       let imageData = '';
-      for (const part of response.candidates?.[0]?.content?.parts || []) {
-        if (part.inlineData) {
-          imageData = `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
-          break;
+      // Correctly iterate through parts to find the image part
+      if (response.candidates?.[0]?.content?.parts) {
+        for (const part of response.candidates[0].content.parts) {
+          if (part.inlineData) {
+            imageData = `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
+            break;
+          }
         }
       }
 
